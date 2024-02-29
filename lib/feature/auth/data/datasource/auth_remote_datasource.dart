@@ -57,6 +57,7 @@ class AuthRemoteDatasource {
   Future<void> registerWithEmail(
     String email,
     String password,
+    String name,
     List<String> sector,
     String value,
     File logo,
@@ -76,8 +77,7 @@ class AuthRemoteDatasource {
 
       Bussiness bussiness = Bussiness(
         uid: userCredential.user!.uid,
-        name: userCredential.user!.displayName ??
-            'User${userCredential.user!.uid}',
+        name: name,
         logo: logoUrl,
         sector: sector,
         value: value,

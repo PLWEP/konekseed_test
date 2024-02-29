@@ -88,13 +88,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
     BuildContext context,
     String email,
     String password,
+    String name,
     List<String> sector,
     String value,
     File logo,
   ) async {
     state = state.copyWith(state: EnumState.loading);
-    final res =
-        await _registerWithEmail.execute(email, password, sector, value, logo);
+    final res = await _registerWithEmail.execute(
+        email, password, name, sector, value, logo);
 
     res.fold(
       (l) {

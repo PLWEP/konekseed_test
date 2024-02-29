@@ -92,6 +92,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           context,
           _emailController.text.trim(),
           _passwordController.text.trim(),
+          _nameController.text.trim(),
           sectorDropdown,
           _valueController.text.trim(),
           image!,

@@ -11,6 +11,7 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bussiness = ref.watch(authNotifierProvider).bussinessData!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -26,79 +27,52 @@ class ProfileView extends ConsumerWidget {
                 Container(
                   width: 50,
                   height: 50,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.grey,
                         offset: Offset(0, 5),
                       )
                     ],
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/flutter_logo.png')),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    image: DecorationImage(image: NetworkImage(bussiness.logo)),
                   ),
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Text(
-                      'Nama Bisnis',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Colors.amber,
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Text(
-                          'Badge 1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
+                Text(
+                  bussiness.name,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                SizedBox(
+                  height: 35,
+                  child: ListView.builder(
+                    itemCount: bussiness.sector.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final item = bussiness.sector[index];
+                      final colors = [Colors.amber, Colors.red, Colors.blue];
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: colors[index],
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Colors.blue,
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Text(
-                          'Badge 1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Colors.redAccent,
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Text(
-                          'Badge 1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                    'lorem ipsum dolor sit amet, consectetur adip non pro id, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam et e quis nostr')
+                Text(bussiness.value)
               ],
             ),
           ),

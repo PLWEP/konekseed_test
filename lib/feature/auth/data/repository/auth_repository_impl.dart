@@ -48,6 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> registerWithEmail(
     String email,
     String password,
+    String name,
     List<String> sector,
     String value,
     File logo,
@@ -56,6 +57,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(await _authRemoteDatasource.registerWithEmail(
         email,
         password,
+        name,
         sector,
         value,
         logo,

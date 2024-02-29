@@ -12,6 +12,7 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> registerWithEmail(
     String email,
     String password,
+    String name,
     List<String> sector,
     String value,
     File logo,

@@ -12,10 +12,18 @@ class RegisterWithEmail {
   Future<Either<Failure, void>> execute(
     String email,
     String password,
+    String name,
     List<String> sector,
     String value,
     File logo,
   ) {
-    return repository.registerWithEmail(email, password, sector, value, logo);
+    return repository.registerWithEmail(
+      email,
+      password,
+      name,
+      sector,
+      value,
+      logo,
+    );
   }
 }
