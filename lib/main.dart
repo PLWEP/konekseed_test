@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       restorationScopeId: 'app',
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
-      home: const LoginView(),
+      home: const HomeView(),
     );
   }
 }
