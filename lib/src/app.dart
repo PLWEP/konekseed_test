@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'view/target_details_view.dart';
+import 'view/add_target_view.dart';
 import 'view/home_view.dart';
 
 class MyApp extends StatelessWidget {
