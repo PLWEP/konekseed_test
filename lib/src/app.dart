@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'sample_feature/target_details_view.dart';
-import 'sample_feature/target_list_view.dart';
+import 'view/target_details_view.dart';
+import 'view/home_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
                     return SettingsView(controller: settingsController);
                   case TargetDetailsView.routeName:
                     return const TargetDetailsView();
-                  case TargetListView.routeName:
+                  case HomeView.routeName:
                   default:
-                    return TargetListView();
+                    return const HomeView();
                 }
               },
             );
