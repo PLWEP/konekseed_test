@@ -4,8 +4,15 @@ import 'package:konekseed_test/presentation/view/add_target_view.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +45,10 @@ class HomeView extends StatelessWidget {
           ],
           fabLocation: StylishBarFabLocation.center,
           hasNotch: true,
-          currentIndex: 0,
-          onTap: (index) {},
+          currentIndex: _pageIndex,
+          onTap: (index) => setState(
+            () => _pageIndex = index,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.push(context,
@@ -48,7 +57,7 @@ class HomeView extends StatelessWidget {
           child: const Icon(Icons.add, color: Colors.red),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: viewList[0],
+        body: viewList[_pageIndex],
       ),
     );
   }
