@@ -49,7 +49,7 @@ class HomeView extends StatelessWidget {
           child: const Icon(Icons.add, color: Colors.red),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: const ProfileView(),
+        body: const TargetView(),
       ),
     );
   }

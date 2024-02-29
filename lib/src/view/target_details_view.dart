@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TargetDetailsView extends StatelessWidget {
-  const TargetDetailsView({super.key});
+class AddTargetView extends StatelessWidget {
+  const AddTargetView({super.key});
 
   static const routeName = '/target_detail';
 

@@ -92,7 +92,6 @@ class TargetView extends StatelessWidget {
                         Text('Weight : 1'),
                       ],
                     ),
-                    onTap: () {},
                   ),
                 );
               },
