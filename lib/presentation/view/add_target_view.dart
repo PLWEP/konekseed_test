@@ -6,8 +6,6 @@ import 'package:konekseed_test/common/utils.dart';
 class AddTargetView extends StatefulWidget {
   const AddTargetView({super.key});
 
-  static const routeName = '/add_target';
-
   @override
   State<AddTargetView> createState() => _AddTargetViewState();
 }

@@ -1,5 +1,5 @@
-import 'package:konekseed_test/src/view/profile_view.dart';
-import 'package:konekseed_test/src/view/target_view.dart';
+import 'package:konekseed_test/presentation/view/profile_view.dart';
+import 'package:konekseed_test/presentation/view/target_view.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
