@@ -1,7 +1,7 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
-import 'package:konekseed_test/presentation/view/edit_target_view.dart';
-import 'package:konekseed_test/presentation/view/sample_item.dart';
+import 'package:konekseed_test/feature/target/presentation/view/edit_target_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/sample_item.dart';
 
 class TargetView extends StatelessWidget {
   const TargetView({

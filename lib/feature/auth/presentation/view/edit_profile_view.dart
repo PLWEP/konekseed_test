@@ -1,37 +1,19 @@
 import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:konekseed_test/common/custom_text_input.dart';
+import 'package:konekseed_test/common/widget/custom_text_input.dart';
 import 'package:konekseed_test/common/utils.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key});
 
   @override
-  State<StatefulWidget> createState() => _RegisterViewState();
+  State<EditProfileView> createState() => _EditProfileViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-  }
-
-  final _formKey = GlobalKey<FormState>();
-
-  void backToLogin(BuildContext context) => Navigator.pop(context);
-
+class _EditProfileViewState extends State<EditProfileView> {
   var sectorDropdown = [];
 
   final TextEditingController _nameController = TextEditingController();
@@ -46,72 +28,55 @@ class _RegisterViewState extends State<RegisterView> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('Pick image method'),
+          title: const Text('Pilih Metode'),
           children: [
             SimpleDialogOption(
               onPressed: () async {
                 final file = await getFromCamera(imagePicker);
-                setState(
-                  () => image = file,
-                );
+                setState(() {
+                  image = file;
+                });
                 pop();
               },
-              child: const Text('Open Kamera'),
+              child: const Text('Buka Kamera'),
             ),
             SimpleDialogOption(
               onPressed: () async {
                 final file = await getFromGallery(imagePicker);
-                setState(
-                  () => image = file,
-                );
+                setState(() {
+                  image = file;
+                });
                 pop();
               },
-              child: const Text('Open Gallery'),
+              child: const Text('Buka Gallery'),
             ),
-            if (image != null)
-              SimpleDialogOption(
-                onPressed: () {
-                  setState(
-                    () => image = null,
-                  );
-                  pop();
-                },
-                child: const Text('Delete Logo'),
-              ),
           ],
         );
       },
     );
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              Padding(
+        appBar: AppBar(
+          title: const Text('Edit Profile'),
+        ),
+        body: ListView(
+          children: [
+            Form(
+              key: _formKey,
+              child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Column(
                   children: [
                     Column(
                       textDirection: TextDirection.ltr,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
                         const SizedBox(height: 5),
                         Row(
                           children: [
@@ -253,63 +218,7 @@ class _RegisterViewState extends State<RegisterView> {
                               value!.isEmpty ? "Please Fill The Field" : null,
                         ),
                         const SizedBox(height: 10),
-                        CustomTextInput(
-                          title: "Email",
-                          controller: _emailController,
-                          enabled: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Fill The Field";
-                            } else if (!EmailValidator.validate(value)) {
-                              return "Email is not valid";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        PasswordTextInput(
-                          title: "Password",
-                          controller: _passwordController,
-                          enabled: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Fill The Field";
-                            } else if (value.length < 6) {
-                              return "Password is too short";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        PasswordTextInput(
-                          title: "Confirm Password",
-                          controller: _confirmPasswordController,
-                          enabled: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Fill The Field";
-                            } else if (_passwordController.text !=
-                                _confirmPasswordController.text) {
-                              return "Password does not match";
-                            } else if (value.length < 6) {
-                              return "Password is too short";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
                       ],
-                    ),
-                    GestureDetector(
-                      onTap: () => backToLogin(context),
-                      child: const Text(
-                        "Already have an account? Login here",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
@@ -321,7 +230,7 @@ class _RegisterViewState extends State<RegisterView> {
                             if (image != null || sectorDropdown.isNotEmpty) {
                               // register();
                             } else {
-                              showSnackBar(
+                              showSnackBarAlert(
                                 context,
                                 'Please input image and sector',
                               );
@@ -343,8 +252,8 @@ class _RegisterViewState extends State<RegisterView> {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

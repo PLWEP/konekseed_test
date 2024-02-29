@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konekseed_test/presentation/view/edit_profile_view.dart';
+import 'package:konekseed_test/feature/auth/presentation/view/edit_profile_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});

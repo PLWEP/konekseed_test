@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:konekseed_test/presentation/view/home_view.dart';
-import 'package:konekseed_test/presentation/view/login_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/home_view.dart';
+import 'package:konekseed_test/feature/auth/presentation/view/login_view.dart';
 
 void main() async {
   runApp(const MyApp());

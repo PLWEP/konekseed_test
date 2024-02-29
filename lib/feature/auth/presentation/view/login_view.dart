@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:konekseed_test/common/custom_text_input.dart';
-import 'package:konekseed_test/presentation/view/register_view.dart';
+import 'package:konekseed_test/common/widget/custom_text_input.dart';
+import 'package:konekseed_test/feature/auth/presentation/view/register_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

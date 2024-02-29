@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konekseed_test/common/utils.dart';
-import 'package:konekseed_test/presentation/view/add_target_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/add_target_view.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 

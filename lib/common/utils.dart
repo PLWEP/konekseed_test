@@ -1,7 +1,7 @@
-import 'package:konekseed_test/presentation/view/notification_view.dart';
-import 'package:konekseed_test/presentation/view/profile_view.dart';
-import 'package:konekseed_test/presentation/view/setting_view.dart';
-import 'package:konekseed_test/presentation/view/target_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/notification_view.dart';
+import 'package:konekseed_test/feature/auth/presentation/view/profile_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/setting_view.dart';
+import 'package:konekseed_test/feature/target/presentation/view/target_view.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -28,7 +28,7 @@ getFromCamera(ImagePicker imagePicker) async {
   }
 }
 
-void showSnackBar(BuildContext context, String text) =>
+void showSnackBarAlert(BuildContext context, String text) =>
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
