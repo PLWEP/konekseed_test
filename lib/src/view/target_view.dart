@@ -85,7 +85,13 @@ class TargetView extends StatelessWidget {
                       icon: const Icon(Icons.edit),
                     ),
                     isThreeLine: true,
-                    subtitle: const Text('Start Date : \nEnd Date : '),
+                    subtitle: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Date: Start Date - End Date'),
+                        Text('Weight : 1'),
+                      ],
+                    ),
                     onTap: () {},
                   ),
                 );
