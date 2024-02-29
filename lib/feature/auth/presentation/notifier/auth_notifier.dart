@@ -85,6 +85,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   void registerWithEmail(
+    BuildContext context,
     String email,
     String password,
     List<String> sector,
@@ -101,7 +102,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         Constants.snackbarKey.currentState
             ?.showSnackBar(showSnackBarWithoutContextRed(l.message));
       },
-      (r) => getCurrentUser(),
+      (r) {
+        getCurrentUser();
+        Navigator.pop(context);
+      },
     );
   }
 
@@ -136,7 +140,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       (r) {
         getCurrentUser();
         Constants.snackbarKey.currentState
-            ?.showSnackBar(showSnackBarWithoutContextRed('Profile Update'));
+            ?.showSnackBar(showSnackBarWithoutContextGreen('Profile Update'));
         Navigator.pop(context);
       },
     );

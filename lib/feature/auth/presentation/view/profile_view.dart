@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konekseed_test/feature/auth/presentation/presentation_provider.dart';
 import 'package:konekseed_test/feature/auth/presentation/view/edit_profile_view.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
 
+  void logOut(WidgetRef ref, BuildContext context) =>
+      ref.read(authNotifierProvider.notifier).logout();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -117,7 +122,7 @@ class ProfileView extends StatelessWidget {
                   title: const Text('Logout'),
                   leading: const Icon(Icons.exit_to_app),
                   trailing: const Icon(Icons.navigate_next),
-                  onTap: () {},
+                  onTap: () => logOut(ref, context),
                 ),
                 const SizedBox(),
               ],

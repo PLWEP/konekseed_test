@@ -3,18 +3,21 @@ import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:konekseed_test/common/constant.dart';
 import 'package:konekseed_test/common/widget/custom_text_input.dart';
 import 'package:konekseed_test/common/utils.dart';
+import 'package:konekseed_test/feature/auth/presentation/presentation_provider.dart';
 
-class RegisterView extends StatefulWidget {
+class RegisterView extends ConsumerStatefulWidget {
   const RegisterView({super.key});
 
   @override
-  State<StatefulWidget> createState() => _RegisterViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _RegisterViewState extends ConsumerState<RegisterView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -32,7 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   void backToLogin(BuildContext context) => Navigator.pop(context);
 
-  var sectorDropdown = [];
+  List<String> sectorDropdown = [];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
@@ -84,8 +87,20 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
+  void register() {
+    ref.read(authNotifierProvider.notifier).registerWithEmail(
+          context,
+          _emailController.text.trim(),
+          _passwordController.text.trim(),
+          sectorDropdown,
+          _valueController.text.trim(),
+          image!,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authNotifierProvider);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -150,7 +165,9 @@ class _RegisterViewState extends State<RegisterView> {
                               child: CustomTextInput(
                                 title: "Bussiness Name",
                                 controller: _nameController,
-                                enabled: true,
+                                enabled: authState.state == EnumState.loading
+                                    ? false
+                                    : true,
                                 validator: (value) => value!.isEmpty
                                     ? "Please Fill The Field"
                                     : null,
@@ -172,7 +189,10 @@ class _RegisterViewState extends State<RegisterView> {
                                 .map(
                                   (String item) => DropdownMenuItem(
                                     value: item,
-                                    enabled: false,
+                                    enabled:
+                                        authState.state == EnumState.loading
+                                            ? false
+                                            : true,
                                     child: StatefulBuilder(
                                       builder: (context, menuSetState) {
                                         final isSelected =
@@ -248,7 +268,9 @@ class _RegisterViewState extends State<RegisterView> {
                         CustomTextInput(
                           title: 'Bussiness Value',
                           controller: _valueController,
-                          enabled: true,
+                          enabled: authState.state == EnumState.loading
+                              ? false
+                              : true,
                           validator: (value) =>
                               value!.isEmpty ? "Please Fill The Field" : null,
                         ),
@@ -256,7 +278,9 @@ class _RegisterViewState extends State<RegisterView> {
                         CustomTextInput(
                           title: "Email",
                           controller: _emailController,
-                          enabled: true,
+                          enabled: authState.state == EnumState.loading
+                              ? false
+                              : true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Please Fill The Field";
@@ -270,7 +294,9 @@ class _RegisterViewState extends State<RegisterView> {
                         PasswordTextInput(
                           title: "Password",
                           controller: _passwordController,
-                          enabled: true,
+                          enabled: authState.state == EnumState.loading
+                              ? false
+                              : true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Please Fill The Field";
@@ -284,7 +310,9 @@ class _RegisterViewState extends State<RegisterView> {
                         PasswordTextInput(
                           title: "Confirm Password",
                           controller: _confirmPasswordController,
-                          enabled: true,
+                          enabled: authState.state == EnumState.loading
+                              ? false
+                              : true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Please Fill The Field";
@@ -319,7 +347,7 @@ class _RegisterViewState extends State<RegisterView> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             if (image != null || sectorDropdown.isNotEmpty) {
-                              // register();
+                              register();
                             } else {
                               showSnackBarAlert(
                                 context,
@@ -330,14 +358,16 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        child: authState.state == EnumState.loading
+                            ? const Loader()
+                            : const Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ),
                     ),
                   ],

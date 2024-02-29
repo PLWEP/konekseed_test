@@ -1,16 +1,19 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konekseed_test/common/constant.dart';
 import 'package:konekseed_test/common/widget/custom_text_input.dart';
+import 'package:konekseed_test/feature/auth/presentation/presentation_provider.dart';
 import 'package:konekseed_test/feature/auth/presentation/view/register_view.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LoginViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -29,8 +32,12 @@ class _LoginViewState extends State<LoginView> {
         context, MaterialPageRoute(builder: (_) => const RegisterView()));
   }
 
+  void login() => ref.read(authNotifierProvider.notifier).signInWithEmail(
+      _emailController.text.trim(), _passwordController.text.trim());
+
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authNotifierProvider);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -57,7 +64,8 @@ class _LoginViewState extends State<LoginView> {
                     CustomTextInput(
                       title: "Email",
                       controller: _emailController,
-                      enabled: true,
+                      enabled:
+                          authState.state == EnumState.loading ? false : true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please Fill The Field";
@@ -71,7 +79,8 @@ class _LoginViewState extends State<LoginView> {
                     PasswordTextInput(
                       title: "Password",
                       controller: _passwordController,
-                      enabled: true,
+                      enabled:
+                          authState.state == EnumState.loading ? false : true,
                       validator: (value) =>
                           value!.isEmpty ? "Please Fill The Field" : null,
                     ),
@@ -96,20 +105,22 @@ class _LoginViewState extends State<LoginView> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        // login();
+                        login();
                       }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    child: const Text(
-                      'Log In',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    child: authState.state == EnumState.loading
+                        ? const Loader()
+                        : const Text(
+                            'Log In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                   ),
                 ),
               ],
