@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                     return const TargetDetailsView();
                   case TargetListView.routeName:
                   default:
-                    return const TargetListView();
+                    return TargetListView();
                 }
               },
             );
