@@ -1,5 +1,6 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
+import 'package:konekseed_test/presentation/view/edit_target_view.dart';
 import 'package:konekseed_test/presentation/view/sample_item.dart';
 
 class TargetView extends StatelessWidget {
@@ -81,7 +82,10 @@ class TargetView extends StatelessWidget {
                       child: const Icon(Icons.check),
                     ),
                     trailing: IconButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const EditTargetView())),
                       icon: const Icon(Icons.edit),
                     ),
                     isThreeLine: true,
