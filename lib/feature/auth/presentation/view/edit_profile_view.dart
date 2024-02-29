@@ -1,20 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:konekseed_test/common/widget/custom_text_input.dart';
-import 'package:konekseed_test/common/utils.dart';
+import 'package:konekseed_test/common/constant.dart';
 
-class EditProfileView extends StatefulWidget {
-  const EditProfileView({super.key});
+import 'package:konekseed_test/common/utils.dart';
+import 'package:konekseed_test/common/widget/custom_text_input.dart';
+import 'package:konekseed_test/feature/auth/data/model/bussiness.dart';
+import 'package:konekseed_test/feature/auth/presentation/presentation_provider.dart';
+
+class EditProfileView extends ConsumerStatefulWidget {
+  final Bussiness bussiness;
+  const EditProfileView({
+    Key? key,
+    required this.bussiness,
+  }) : super(key: key);
 
   @override
-  State<EditProfileView> createState() => _EditProfileViewState();
+  ConsumerState<EditProfileView> createState() => _EditProfileViewState();
 }
 
-class _EditProfileViewState extends State<EditProfileView> {
-  var sectorDropdown = [];
+class _EditProfileViewState extends ConsumerState<EditProfileView> {
+  List<String> sectorDropdown = [];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
@@ -56,9 +66,37 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.bussiness.name;
+    _valueController.text = widget.bussiness.value;
+    sectorDropdown = [...widget.bussiness.sector];
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _valueController.dispose();
+  }
+
+  void edit() {
+    ref.read(authNotifierProvider.notifier).editBussinessProfile(
+          context,
+          widget.bussiness.copyWith(
+            name: _nameController.text.trim(),
+            sector: sectorDropdown,
+            value: _valueController.text.trim(),
+          ),
+          image,
+        );
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authNotifierProvider);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -103,9 +141,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     ),
                                     child: image != null
                                         ? Image.file(image!)
-                                        : const Center(
-                                            child: Icon(Icons.camera, size: 30),
-                                          ),
+                                        : Image.network(widget.bussiness.logo),
                                   ),
                                 ),
                               ],
@@ -115,7 +151,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                               child: CustomTextInput(
                                 title: "Bussiness Name",
                                 controller: _nameController,
-                                enabled: true,
+                                enabled: authState.state == EnumState.loading
+                                    ? false
+                                    : true,
                                 validator: (value) => value!.isEmpty
                                     ? "Please Fill The Field"
                                     : null,
@@ -137,7 +175,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 .map(
                                   (String item) => DropdownMenuItem(
                                     value: item,
-                                    enabled: false,
+                                    enabled:
+                                        authState.state == EnumState.loading
+                                            ? false
+                                            : true,
                                     child: StatefulBuilder(
                                       builder: (context, menuSetState) {
                                         final isSelected =
@@ -213,7 +254,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                         CustomTextInput(
                           title: 'Bussiness Value',
                           controller: _valueController,
-                          enabled: true,
+                          enabled: authState.state == EnumState.loading
+                              ? false
+                              : true,
                           validator: (value) =>
                               value!.isEmpty ? "Please Fill The Field" : null,
                         ),
@@ -228,7 +271,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             if (image != null || sectorDropdown.isNotEmpty) {
-                              // register();
+                              edit();
                             } else {
                               showSnackBarAlert(
                                 context,
@@ -239,14 +282,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        child: authState.state == EnumState.loading
+                            ? const Loader()
+                            : const Text(
+                                'Edit',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ),
                     ),
                   ],

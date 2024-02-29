@@ -90,7 +90,8 @@ class ProfileView extends ConsumerWidget {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const EditProfileView())),
+                          builder: (_) =>
+                              EditProfileView(bussiness: bussiness))),
                 ),
                 ListTile(
                   title: const Text('Logout'),

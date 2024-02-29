@@ -128,11 +128,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
     BuildContext context,
     Bussiness bussiness,
     File? logo,
-    String name,
   ) async {
     state = state.copyWith(state: EnumState.loading);
 
-    bussiness = bussiness.copyWith(name: name);
     final res = await _editBussinessProfile.execute(bussiness, logo);
 
     res.fold(
