@@ -7,7 +7,20 @@ part of 'bussiness.dart';
 // **************************************************************************
 
 _$BussinessImpl _$$BussinessImplFromJson(Map<String, dynamic> json) =>
-    _$BussinessImpl();
+    _$BussinessImpl(
+      uid: json['uid'] as String,
+      name: json['name'] as String,
+      logo: json['logo'] as String,
+      sector:
+          (json['sector'] as List<dynamic>).map((e) => e as String).toList(),
+      value: json['value'] as String,
+    );
 
 Map<String, dynamic> _$$BussinessImplToJson(_$BussinessImpl instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'uid': instance.uid,
+      'name': instance.name,
+      'logo': instance.logo,
+      'sector': instance.sector,
+      'value': instance.value,
+    };

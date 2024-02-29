@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konekseed_test/common/constant.dart';
 import 'package:konekseed_test/feature/target/presentation/view/home_view.dart';
 import 'package:konekseed_test/feature/auth/presentation/view/login_view.dart';
 
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: Constants.snackbarKey,
       restorationScopeId: 'app',
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
