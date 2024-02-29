@@ -47,7 +47,7 @@ var decoration = InputDecoration(
   ),
 );
 
-final viewList = [
+const viewList = [
   TargetView(),
   NotificationView(),
   SettingView(),

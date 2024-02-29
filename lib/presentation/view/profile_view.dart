@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konekseed_test/presentation/view/edit_profile_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -106,19 +107,16 @@ class ProfileView extends StatelessWidget {
                 ListTile(
                   title: const Text('Edit Profile'),
                   leading: const Icon(Icons.person),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.navigate_next),
-                  ),
-                  onTap: () {},
+                  trailing: const Icon(Icons.navigate_next),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const EditProfileView())),
                 ),
                 ListTile(
                   title: const Text('Logout'),
                   leading: const Icon(Icons.exit_to_app),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.navigate_next),
-                  ),
+                  trailing: const Icon(Icons.navigate_next),
                   onTap: () {},
                 ),
                 const SizedBox(),
