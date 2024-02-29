@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konekseed_test/src/view/profile_view.dart';
 import 'package:konekseed_test/src/view/target_view.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -48,7 +49,7 @@ class HomeView extends StatelessWidget {
           child: const Icon(Icons.add, color: Colors.red),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: const TargetView(),
+        body: const ProfileView(),
       ),
     );
   }
