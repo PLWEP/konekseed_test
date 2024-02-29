@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konekseed_test/common/utils.dart';
 
 class CustomTextInput extends StatelessWidget {
   final String title;
@@ -17,48 +18,24 @@ class CustomTextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: validator,
-      controller: controller,
-      obscureText: obsecure,
-      enabled: enabled,
-      textAlign: TextAlign.start,
-      decoration: InputDecoration(
-        labelText: title,
-        labelStyle: const TextStyle(
-          fontSize: 13,
-          fontFamily: 'Poppins-regular',
-          fontWeight: FontWeight.w600,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          borderSide: BorderSide(
-            width: 1,
-            color: Color(0xFF837E93),
-          ),
+        const SizedBox(height: 5),
+        TextFormField(
+          validator: validator,
+          controller: controller,
+          obscureText: obsecure,
+          enabled: enabled,
+          textAlign: TextAlign.start,
+          decoration: decoration,
+          cursorColor: Colors.black,
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          borderSide: BorderSide(
-            width: 1,
-            color: Color(0xFF837E93),
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          borderSide: BorderSide(
-            width: 1,
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          borderSide: BorderSide(
-            width: 1,
-            color: Colors.red,
-          ),
-        ),
-      ),
-      cursorColor: Colors.black,
+      ],
     );
   }
 }

@@ -28,6 +28,20 @@ getFromCamera(ImagePicker imagePicker) async {
   }
 }
 
+void showSnackBar(BuildContext context, String text) =>
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(text),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+
+SnackBar showSnackBarWithoutContext(String text) =>
+    SnackBar(content: Text(text));
+
 var decoration = InputDecoration(
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(5),
