@@ -8,6 +8,7 @@ class Target with _$Target {
   factory Target({
     required String id,
     required String uid,
+    required String name,
     required String category,
     required int weight,
     required DateTime startDate,

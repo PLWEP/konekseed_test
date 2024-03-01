@@ -22,6 +22,7 @@ Target _$TargetFromJson(Map<String, dynamic> json) {
 mixin _$Target {
   String get id => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   int get weight => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $TargetCopyWith<$Res> {
   $Res call(
       {String id,
       String uid,
+      String name,
       String category,
       int weight,
       DateTime startDate,
@@ -63,6 +65,7 @@ class _$TargetCopyWithImpl<$Res, $Val extends Target>
   $Res call({
     Object? id = null,
     Object? uid = null,
+    Object? name = null,
     Object? category = null,
     Object? weight = null,
     Object? startDate = null,
@@ -77,6 +80,10 @@ class _$TargetCopyWithImpl<$Res, $Val extends Target>
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       category: null == category
           ? _value.category
@@ -112,6 +119,7 @@ abstract class _$$TargetImplCopyWith<$Res> implements $TargetCopyWith<$Res> {
   $Res call(
       {String id,
       String uid,
+      String name,
       String category,
       int weight,
       DateTime startDate,
@@ -132,6 +140,7 @@ class __$$TargetImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? uid = null,
+    Object? name = null,
     Object? category = null,
     Object? weight = null,
     Object? startDate = null,
@@ -146,6 +155,10 @@ class __$$TargetImplCopyWithImpl<$Res>
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       category: null == category
           ? _value.category
@@ -177,6 +190,7 @@ class _$TargetImpl implements _Target {
   _$TargetImpl(
       {required this.id,
       required this.uid,
+      required this.name,
       required this.category,
       required this.weight,
       required this.startDate,
@@ -191,6 +205,8 @@ class _$TargetImpl implements _Target {
   @override
   final String uid;
   @override
+  final String name;
+  @override
   final String category;
   @override
   final int weight;
@@ -203,7 +219,7 @@ class _$TargetImpl implements _Target {
 
   @override
   String toString() {
-    return 'Target(id: $id, uid: $uid, category: $category, weight: $weight, startDate: $startDate, endDate: $endDate, status: $status)';
+    return 'Target(id: $id, uid: $uid, name: $name, category: $category, weight: $weight, startDate: $startDate, endDate: $endDate, status: $status)';
   }
 
   @override
@@ -213,6 +229,7 @@ class _$TargetImpl implements _Target {
             other is _$TargetImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.weight, weight) || other.weight == weight) &&
@@ -225,7 +242,7 @@ class _$TargetImpl implements _Target {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, uid, category, weight, startDate, endDate, status);
+      runtimeType, id, uid, name, category, weight, startDate, endDate, status);
 
   @JsonKey(ignore: true)
   @override
@@ -245,6 +262,7 @@ abstract class _Target implements Target {
   factory _Target(
       {required final String id,
       required final String uid,
+      required final String name,
       required final String category,
       required final int weight,
       required final DateTime startDate,
@@ -257,6 +275,8 @@ abstract class _Target implements Target {
   String get id;
   @override
   String get uid;
+  @override
+  String get name;
   @override
   String get category;
   @override

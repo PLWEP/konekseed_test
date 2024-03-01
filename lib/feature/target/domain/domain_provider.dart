@@ -5,7 +5,7 @@ import 'package:konekseed_test/feature/target/domain/usecase/delete_target.dart'
 import 'package:konekseed_test/feature/target/domain/usecase/edit_target.dart';
 import 'package:konekseed_test/feature/target/domain/usecase/fetch_user_target.dart';
 
-final addActivityProvider = Provider(
+final addTargetProvider = Provider(
   (ref) => AddTarget(ref.watch(targetRepositoryProvider)),
 );
 
