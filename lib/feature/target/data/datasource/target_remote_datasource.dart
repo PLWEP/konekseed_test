@@ -10,7 +10,7 @@ class TargetRemoteDatasource {
   }) : _firestore = firestore;
 
   CollectionReference get _targets =>
-      _firestore.collection(Constants.bussinessCollection);
+      _firestore.collection(Constants.targetCollection);
 
   Future<void> addTarget(Target target) async {
     try {
@@ -24,7 +24,6 @@ class TargetRemoteDatasource {
     try {
       return await _targets
           .where('uid', isEqualTo: uid)
-          .orderBy('date', descending: true)
           .snapshots()
           .map(
             (event) => event.docs

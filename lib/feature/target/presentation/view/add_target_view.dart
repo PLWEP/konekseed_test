@@ -1,16 +1,20 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:konekseed_test/common/constant.dart';
 import 'package:konekseed_test/common/utils.dart';
+import 'package:konekseed_test/common/widget/custom_text_input.dart';
+import 'package:konekseed_test/feature/target/presentation/presentation_provider.dart';
 
-class AddTargetView extends StatefulWidget {
+class AddTargetView extends ConsumerStatefulWidget {
   const AddTargetView({super.key});
 
   @override
-  State<AddTargetView> createState() => _AddTargetViewState();
+  ConsumerState<AddTargetView> createState() => _AddTargetViewState();
 }
 
-class _AddTargetViewState extends State<AddTargetView> {
+class _AddTargetViewState extends ConsumerState<AddTargetView> {
   var startDate = DateTime.now();
   var endDate = DateTime.now();
 
@@ -21,13 +25,23 @@ class _AddTargetViewState extends State<AddTargetView> {
   final TextEditingController _weightController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  void addTarget() => ref.read(targetNotifierProvider.notifier).addTarget(
+        context: context,
+        name: _nameController.text.trim(),
+        weight: int.parse(_weightController.text.trim()),
+        startDate: startDate,
+        endDate: endDate,
+        category: categoryDropdown,
+        status: statusDropdown,
+      );
+
   @override
   Widget build(BuildContext context) {
+    final targetState = ref.watch(targetNotifierProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Add Target'),
-        ),
+        appBar: AppBar(title: const Text('Add Target')),
         body: ListView(
           children: [
             Form(
@@ -38,16 +52,13 @@ class _AddTargetViewState extends State<AddTargetView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Name',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 5),
-                    TextFormField(
+                    CustomTextInput(
+                      title: "Name",
                       controller: _nameController,
+                      enabled:
+                          targetState.state == EnumState.loading ? false : true,
                       validator: (value) =>
                           value!.isEmpty ? "Please Fill The Field" : null,
-                      decoration: decoration,
-                      cursorColor: Colors.black,
                     ),
                     const SizedBox(height: 10),
                     const Text(
@@ -100,6 +111,8 @@ class _AddTargetViewState extends State<AddTargetView> {
                       decoration: decoration,
                       cursorColor: Colors.black,
                       keyboardType: TextInputType.number,
+                      enabled:
+                          targetState.state == EnumState.loading ? false : true,
                     ),
                     const SizedBox(height: 10),
                     const Text(
@@ -233,7 +246,7 @@ class _AddTargetViewState extends State<AddTargetView> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // addActivity();
+                            addTarget();
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -245,13 +258,15 @@ class _AddTargetViewState extends State<AddTargetView> {
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
                         ),
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: targetState.state == EnumState.loading
+                            ? const Loader()
+                            : const Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ],

@@ -1,16 +1,24 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:konekseed_test/common/constant.dart';
 import 'package:konekseed_test/common/utils.dart';
+import 'package:konekseed_test/feature/target/data/model/target.dart';
+import 'package:konekseed_test/feature/target/presentation/presentation_provider.dart';
 
-class EditTargetView extends StatefulWidget {
-  const EditTargetView({super.key});
+class EditTargetView extends ConsumerStatefulWidget {
+  final Target target;
+  const EditTargetView({
+    super.key,
+    required this.target,
+  });
 
   @override
-  State<EditTargetView> createState() => _EditTargetViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _EditTargetViewState();
 }
 
-class _EditTargetViewState extends State<EditTargetView> {
+class _EditTargetViewState extends ConsumerState<EditTargetView> {
   var startDate = DateTime.now();
   var endDate = DateTime.now();
 
@@ -21,8 +29,33 @@ class _EditTargetViewState extends State<EditTargetView> {
   final TextEditingController _weightController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  void editTarget() => ref.read(targetNotifierProvider.notifier).editTarget(
+        context: context,
+        target: widget.target.copyWith(
+          name: _nameController.text.trim(),
+          weight: int.parse(_weightController.text.trim()),
+          startDate: startDate,
+          endDate: endDate,
+          category: categoryDropdown,
+          status: statusDropdown,
+        ),
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.target.name;
+    _weightController.text = widget.target.weight.toString();
+    startDate = widget.target.startDate;
+    endDate = widget.target.endDate;
+    categoryDropdown = widget.target.category;
+    statusDropdown = widget.target.status;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final targetState = ref.watch(targetNotifierProvider);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -233,7 +266,7 @@ class _EditTargetViewState extends State<EditTargetView> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // addActivity();
+                            editTarget();
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -245,13 +278,15 @@ class _EditTargetViewState extends State<EditTargetView> {
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
                         ),
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: targetState.state == EnumState.loading
+                            ? const Loader()
+                            : const Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ],

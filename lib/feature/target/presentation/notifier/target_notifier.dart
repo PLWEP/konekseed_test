@@ -95,12 +95,12 @@ class TargetNotifier extends StateNotifier<TargetState> {
   }
 
   void editTarget({
-    required Target activity,
+    required Target target,
     required BuildContext context,
   }) async {
     state = state.copyWith(state: EnumState.loading);
 
-    final res = await _editTarget.execute(activity);
+    final res = await _editTarget.execute(target);
     res.fold(
       (l) {
         state = state.copyWith(
